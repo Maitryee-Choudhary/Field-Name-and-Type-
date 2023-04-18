@@ -91,7 +91,18 @@ const List = () => {
       });
    }
   
-  
+   const updateDeleteSub = (items, itemId) => {
+    
+      const newItem = items.filter((item)=>item.id !== itemId);
+      const res = newItem.map((item)=>{
+          return {
+            ...item,
+            subType: updateDeleteSub(item.subType,itemId)
+          };
+      });
+
+      return res;
+  }; 
   const handleDeleteItem = (itemId) => {
    // console.log("Del btn is clicled");
     const newList = itemList.filter((item)=>item.id !== itemId);
@@ -101,12 +112,12 @@ const List = () => {
         
           return {
             ...item,
-            subType: item.subType.filter(subType => subType.id !== itemId)
-          };
-        
+            subType: updateDeleteSub(item.subType,itemId)
+          };   
      
       })
     );
+
   }
 
     const handleSave = () => {
@@ -115,7 +126,7 @@ const List = () => {
        setItemList([]);
     }  
 
-    console.log(itemList);
+    //console.log(itemList);
     
 
     return (
